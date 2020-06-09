@@ -1,0 +1,6 @@
+08 .slide
+09 .title-location
+10 .home
+12 .title-location
+20 .nabar
+50 .about-active

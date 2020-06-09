@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test2</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      .container {
+        width: 100vw;
+        height: 100vh;
+        text-align: center;
+        background-color: black;
+        /* background-color: rgb(94, 94, 94); */
+      }
+
+      img {
+        height: 100vh;
+        width: auto;
+        background-color: black;
+      }
+
+      .circle {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        border: none;
+        background-color: yellow;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <span class="circle"></span>
+      <img class="zoom" src="./world.svg" />
+    </div>
+    <script src="./wheelzoom.js"></script>
+    <script>
+      wheelzoom(document.querySelector("img.zoom"));
+    </script>
+  </body>
+</html>

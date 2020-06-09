@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Maps Example with Multiple Custom Marker & Infowindow</title>
+    <style>
+      .map {
+        height: 500px;
+        width: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1>Google Maps Example with Multiple Custom Marker & Infowindow</h1>
+      <div class="map" id="map"></div>
+    </center>
+    <script>
+      var map;
+      var InforObj = [];
+      var centerCords = {
+        lat: -22.8813428,
+        lng: -47.0671348,
+      };
+
+      window.onload = () => {
+        initMap();
+      };
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 15,
+          center: centerCords,
+        });
+      }
+    </script>
+    <script
+      sync
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZK-MnaLkb5A_x2D26nCEvPuEuEDsMmKo&callback=initMap"
+    ></script>
+  </body>
+</html>

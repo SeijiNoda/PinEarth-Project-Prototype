@@ -1,0 +1,219 @@
+// _carrousel.scss - SCSS for controling and styling the img-carrousel from the Home page
+// Matheus Seiji Luna Noda - 12-12/03/2020
+.slidershow {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.navigation {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+.bar {
+  width: 70px;
+  height: 14px;
+  border: 2px solid #fff;
+  margin: 6px;
+  cursor: pointer;
+  transition: 0.6s;
+}
+.bar:hover {
+  background: #fff;
+}
+
+input[name="r"] {
+  position: absolute;
+  visibility: hidden;
+}
+
+.slides {
+  width: 500%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+}
+
+.slide {
+  width: 20%;
+  transition: 1s;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .title-location {
+    text-align: center;
+    font-size: 6rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-family: "Roboto", "Verdana", sans-serif;
+    position: absolute;
+    line-height: 100vh;
+    width: 100%;
+    user-select: none;
+  }
+
+  .description-fill {
+    display: none;
+  }
+
+  .explore-container {
+    position: absolute;
+    text-align: center;
+    font-size: 2rem;
+    bottom: 0;
+    letter-spacing: 1px;
+    width: 100%;
+    line-height: 70vh;
+    text-transform: uppercase;
+
+    a {
+      color: white;
+      font-family: "Roboto", "Verdana", sans-serif;
+      text-decoration: none;
+      border: 2px solid white;
+      border-radius: 5px;
+      padding: 5px 50px;
+      transition: 0.6s;
+      user-select: none;
+
+      &:hover {
+        letter-spacing: 6px;
+        background: rgba(#fff, 0.1);
+      }
+    }
+  }
+}
+
+// Responsive part
+@media (max-width: 562px) {
+  .bar {
+    width: 50px;
+  }
+
+  .home {
+    background-image: url("../images/bg.png");
+    background-size: cover;
+  }
+
+  .slidershow {
+    overflow: hidden;
+    height: 50%;
+    background: rgb(51, 51, 51);
+    width: 70%;
+    box-shadow: 10px 10px 32px rgba(0, 0, 0, 0.35),
+      -3px -3px 16px rgba(180, 180, 180, 0.2);
+    border-radius: 10px;
+
+    .slides {
+      height: 50%;
+    }
+  }
+
+  .slide {
+    img {
+      opacity: 0.8;
+      z-index: 8;
+    }
+
+    .title-location {
+      font-size: 2rem;
+      line-height: 27.5vh;
+      z-index: 9;
+    }
+
+    .description-fill {
+      display: inline-block;
+      color: white;
+      font-family: "Roboto", "Verdana", sans-serif;
+      position: absolute;
+      line-height: 62.5vh;
+      text-align: center;
+      width: 100%;
+      user-select: none;
+    }
+
+    .explore-container {
+      position: absolute;
+      bottom: 0;
+      top: 0;
+      height: 50%;
+      line-height: 72.5vh;
+      z-index: 12;
+      cursor: pointer;
+
+      a {
+        color: white;
+        background: rgb(41, 41, 41);
+        font-family: "Roboto", "Verdana", sans-serif;
+        text-decoration: none;
+        border: none;
+        font-size: 1.4rem;
+        border-radius: 50px;
+        font-weight: bold;
+        user-select: none;
+        letter-spacing: 1px;
+        box-shadow: 8px 8px 16px 0px rgba(0, 0, 0, 0.35),
+          -2px -2px 8px rgba(180, 180, 180, 0.2);
+        transition: 0.4s;
+
+        &:hover {
+          letter-spacing: 1px;
+          box-shadow: 2px 2px 8px 0px rgba(255, 255, 255, 0.2),
+            -8px -8px 16px rgba(0, 0, 0, 0.35);
+        }
+      }
+    }
+  }
+}
+
+@media (max-height: 568px) {
+  .bar {
+    height: 12px;
+    width: 45px;
+  }
+
+  .slide {
+    .title-location {
+      font-size: 1.5em;
+    }
+
+    .description-fill {
+      font-size: 0.9em;
+    }
+
+    .explore-container {
+      a {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+// Funcional part of the carrousel
+#r1:checked ~ .s1 {
+  margin-left: 0;
+}
+#r2:checked ~ .s1 {
+  margin-left: -20%;
+}
+#r3:checked ~ .s1 {
+  margin-left: -40%;
+}
+#r4:checked ~ .s1 {
+  margin-left: -60%;
+}
+#r5:checked ~ .s1 {
+  margin-left: -80%;
+}

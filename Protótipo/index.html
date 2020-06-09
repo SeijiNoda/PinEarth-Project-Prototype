@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Ranga&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/7abbdafe5c.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="shortcut icon" href="./images/pin.png" type="image/x-icon" />
+    <link rel="stylesheet" href="style/main.css" />
+    <title>PinEarth</title>
+  </head>
+  <body>
+    <nav>
+      <ul class="navbar">
+        <li><a class="nav-item" href="#">Home</a></li>
+        <li><a class="nav-item" href="#">Map</a></li>
+        <li><a class="nav-item" href="#">About Us</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="home">
+        <div class="home-content">
+          <div class="slidershow middle">
+            <div class="slides">
+              <input type="radio" name="r" id="r1" checked />
+              <input type="radio" name="r" id="r2" />
+              <input type="radio" name="r" id="r3" />
+              <input type="radio" name="r" id="r4" />
+              <input type="radio" name="r" id="r5" />
+              <div class="slide s1">
+                <div class="title-location">New York</div>
+                <p class="description-fill">Come explore the world with us</p>
+                <div class="explore-container">
+                  <a href="#" class="explore-link">Explore</a>
+                </div>
+                <img src="./images/locations/ny.jpg" alt="New York" />
+              </div>
+              <div class="slide">
+                <div class="title-location">Tokyo</div>
+                <p class="description-fill">Come explore the world with us</p>
+                <div class="explore-container">
+                  <a href="#" class="explore-link">Explore</a>
+                </div>
+                <img src="./images/locations/tk.jpg" alt="Tokyo" />
+              </div>
+              <div class="slide">
+                <div class="title-location">São Paulo</div>
+                <p class="description-fill">Come explore the world with us</p>
+                <div class="explore-container">
+                  <a href="#" class="explore-link">Explore</a>
+                </div>
+                <img src="./images/locations/sp.jpg" alt="São Paulo" />
+              </div>
+            </div>
+
+            <div class="navigation">
+              <label for="r1" class="bar"></label>
+              <label for="r2" class="bar"></label>
+              <label for="r3" class="bar"></label>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="about">
+        <div class="container-about">
+          <div class="info-about">
+            <div class="bgimg-about"><img src="./map.svg" alt="map" /></div>
+            <div class="body-about">
+              <div class="ba-container">
+                <div class="ba-title">PinEarth</div>
+                <div class="ba-text">
+                  PinEarth is a web-map that can take you to many interesting
+                  places all around the globe, from New York to Amsterdan, from
+                  Mount Fuji to the Eifell Tower. It was built in 2020 by three
+                  high school students, using, in special, Vue.js for the
+                  front-end, and Asp.NET C# for the back-end, along side with
+                  many other things.
+                  <br /><br />What are you waiting for?<br />
+                  <button id="ba-link">Go explore</button>
+                </div>
+                <div class="ba-social">
+                  <i class="fab fa-github"></i>
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="../scripts/main.js"></script>
+  </body>
+</html>

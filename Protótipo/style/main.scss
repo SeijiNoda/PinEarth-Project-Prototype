@@ -1,0 +1,85 @@
+// main.scss - Main file for Home page of the project
+// Matheus Seiji Luna Noda 12/03/2020
+
+// Imports "_carrousel.scss"
+@import "carrousel";
+@import "about";
+
+// Home SCSS
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  //removing scroolbar
+  //Chrome and all
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  //IE and Edge
+  -ms-overflow-style: none;
+}
+
+.navbar {
+  height: 10vh;
+  display: flex;
+  width: 30%;
+  list-style: none;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: auto;
+  position: absolute;
+  text-transform: uppercase;
+  font-family: "Roboto", "Verdana", sans-serif;
+  z-index: 20;
+
+  .nav-item {
+    text-decoration: none;
+    color: white;
+    font-size: 1.3em;
+    padding: 5px 10px;
+    border: 2px solid rgba(white, 0);
+    border-radius: 5px;
+    transition: 0.6s;
+    user-select: none;
+
+    &:hover {
+      letter-spacing: 2px;
+      border-color: rgba(white, 1);
+    }
+  }
+}
+
+.home {
+  height: 100vh;
+  overflow: hidden;
+  z-index: 10;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Responsive part
+@media (max-width: 932px) {
+  .navbar {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    width: 100%;
+    background: rgba(black, 0.2);
+
+    .nav-item {
+      color: white;
+      border: 2px solid rgba(white, 0);
+
+      &:hover {
+        border: 2px solid rgba(white, 1);
+      }
+    }
+  }
+}

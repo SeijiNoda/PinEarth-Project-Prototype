@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="container">
+      <img ondragstart="return false" id="drag-img" src="./map.svg" />
+    </div>
+    <input type="button" id="zoomout" class="button" value="Zoom out" />
+    <input type="button" id="zoomin" class="button" value="Zoom in" />
+  </body>
+</html>
+<script>
+  var imagem = null,
+    x_cursor = 0,
+    y_cursor = 0,
+    x_imagem = 0,
+    y_imagem = 0;
+
+  function zoom(zoomincrement) {
+    imagem = document.getElementById("drag-img");
+    var pre_width = imagem.getBoundingClientRect().width,
+      pre_height = imagem.getBoundingClientRect().height;
+    imagem.style.width = pre_width * zoomincrement + "px";
+    imagem.style.height = pre_height * zoomincrement + "px";
+    imagem = null;
+  }
+
+  document.getElementById("zoomout").addEventListener("click", function () {
+    zoom(2 / 3);
+  });
+  document.getElementById("zoomin").addEventListener("click", function () {
+    zoom(1.5);
+  });
+
+  function start_drag() {
+    imagem = this;
+    x_imagem =
+      window.event.clientX - document.getElementById("drag-img").offsetLeft;
+    y_imagem =
+      window.event.clientY - document.getElementById("drag-img").offsetTop;
+  }
+
+  function stop_drag() {
+    imagem = null;
+  }
+
+  function while_drag() {
+    var x_cursor = window.event.clientX;
+    var y_cursor = window.event.clientY;
+    if (imagem !== null) {
+      imagem.style.left = x_cursor - x_imagem + "px";
+      imagem.style.top = window.event.clientY - y_imagem + "px";
+
+      console.log(imagem.style.left + " - " + imagem.style.top);
+    }
+  }
+
+  document.getElementById("drag-img").addEventListener("mousedown", start_drag);
+  document
+    .getElementById("container")
+    .addEventListener("mousemove", while_drag);
+  document.getElementById("container").addEventListener("mouseup", stop_drag);
+</script>
+
+<style>
+  #drag-img {
+    cursor: move;
+    position: relative;
+    width: 500px;
+    height: 500px;
+  }
+
+  #container {
+    overflow: hidden;
+    background: red;
+    height: 500px;
+    width: 500px;
+  }
+
+  .button {
+    width: 200px;
+    height: 50px;
+  }
+</style>
