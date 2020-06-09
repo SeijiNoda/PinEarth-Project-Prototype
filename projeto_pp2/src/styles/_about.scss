@@ -1,0 +1,197 @@
+// -about.scss - file for the About Us page
+// Matheus Seiji Luna Noda - 16-17/03/2020
+
+.about {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  z-index: 50;
+  //transform: translateY(-100%);
+  //margin-top: 100vh;
+  pointer-events: none;
+
+  display: flex;
+  flex-direction: row;
+
+  .container-about {
+    width: 100%;
+    background: black;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: 1.6s;
+
+    .info-about {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      position: relative;
+      height: 70vh;
+      width: 80%;
+      background: white;
+      border-radius: 10px;
+      border: none;
+      opacity: 1;
+      cursor: auto;
+      z-index: 51;
+      user-select: none;
+
+      display: flex;
+      flex-direction: row;
+
+      .bgimg-about {
+        flex: 1;
+        width: 40%;
+        height: 100%;
+
+        img {
+          height: 100%;
+          margin: auto;
+        }
+      }
+
+      .body-about {
+        flex: 1;
+        width: 60%;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        text-align: center;
+
+        .ba-container {
+          margin-top: 20%;
+
+          .ba-title {
+            font-size: 2.5rem;
+            margin: 10px;
+          }
+
+          .ba-text {
+            font-size: 1.25rem;
+            width: 90%;
+            margin: auto;
+
+            #ba-link {
+              position: relative;
+              margin-top: 20px;
+              cursor: pointer;
+              font-weight: 200;
+              text-transform: uppercase;
+              background-color: white;
+              color: black;
+              border: 1px solid black;
+              transition: 0.5s;
+              padding: 10px;
+              font-size: inherit;
+              border-radius: 5px;
+              line-height: 1.25rem;
+              outline: none;
+
+              &:hover {
+                color: white;
+                background-color: black;
+              }
+            }
+          }
+
+          .ba-social {
+            display: flex;
+            flex-direction: row;
+            width: 30%;
+            margin: auto;
+            margin-top: 30px;
+
+            i {
+              font-size: 2.5rem;
+              color: rgb(78, 78, 78);
+              transition: 0.5s;
+              width: 2.5rem;
+              margin: auto;
+              cursor: pointer;
+
+              &:hover {
+                color: black;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .about-inactive {
+    margin-top: 107%;
+    pointer-events: none;
+  }
+}
+
+//responsive
+@media (max-width: 1440px) {
+  .about .about-inactive {
+    margin-top: 105%;
+  }
+}
+
+@media (max-width: 1375px) {
+  .about .container-about .info-about .body-about .ba-container {
+    margin-top: -10%;
+
+    .ba-text {
+      width: 60%;
+      font-size: 1.1rem;
+    }
+  }
+
+  .about .about-inactive {
+    margin-top: 117%;
+  }
+}
+
+@media (max-width: 1025px) {
+  .about .container-about .info-about {
+    .body-about .ba-container {
+      margin-top: 20%;
+
+      .ba-text {
+        width: 80%;
+      }
+    }
+
+    .bgimg-about {
+      img {
+        width: 500px;
+      }
+    }
+  }
+
+  .about .about-inactive {
+    margin-top: 160%;
+  }
+}
+
+@media (max-width: 965px) {
+  .about .container-about .info-about {
+    .body-about .ba-container {
+      margin-top: 15%;
+
+      .bgimg-about {
+        img {
+          width: 400px;
+        }
+      }
+    }
+  }
+
+  .about .about-inactive {
+    margin-top: 170%;
+  }
+}
+/*
+@media (max-width: 905px) {
+  .about .container-about .info-about {
+    img {
+      width: 380px;
+    }
+  }
+}
+*/
