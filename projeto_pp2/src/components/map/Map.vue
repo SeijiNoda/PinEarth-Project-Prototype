@@ -3,10 +3,19 @@
     <div class="mapa">
       <div id="mapid"></div>
     </div>
-    <div id="information">
-      <div class="panel">
-        <div class="text-cont item-panel"></div>
-        <div class="image-cont item-panel"></div>
+    <div id="information" class="visibility">
+      <div class="panel top80">
+        <font-awesome-icon icon="times" id="exit-panel"></font-awesome-icon>
+        <div class="text-cont item-panel">
+          <div class="item-title"></div>
+          <div class="item-body"></div>
+          <a id="item-wikipedia"><font-awesome-icon :icon="['fab', 'wikipedia-w']"></font-awesome-icon></a>
+        </div>
+        <div class="image-cont item-panel">
+          <img class="item-img">
+          <img class="item-img">
+          <img class="item-img">
+        </div>
       </div>
     </div>
   </main>
@@ -51,6 +60,11 @@ export default {
       return color;
     };
 
+    const switching = (obj, c1, c2) => {
+      obj.classList.add(c1);
+      obj.classList.remove(c2);
+    }
+
     this.$http.get('https://localhost:5001/Pin').then(response => {
       this.info = response.body;
       console.log(this.info);
@@ -72,7 +86,6 @@ export default {
           }
         ).addTo(pinEarth);
 
-        circle.bindPopup(`<div clas="pinpoint" id="pin${i}">${this.info[i].nomeLocal}</div>`);
         circle.addEventListener('click', function(e) {
           receiveData(e, this.options.data);
         });
@@ -83,14 +96,78 @@ export default {
     });
 
     const receiveData = (e, id) => {
-      alert(this.info[id].nomeLocal);
+      let title = document.querySelector('div.text-cont div.item-title');
+      let body = document.querySelector('div.text-cont div.item-body');
+      let wikipedia = document.querySelector('a#item-wikipedia');
+      title.innerHTML = this.info[id].nomeLocal;
+      body.innerHTML = this.info[id].descricao;
+      wikipedia.setAttribute('href', this.info[id].wikipediaUrl);
+
+      this.$http.get(`https://localhost:5001/ImagemPin/`).then(response => {
+        let imgs = response.body;
+        let imgCont = document.querySelector('div.image-cont');
+        imgCont.innerHTML = "";
+        for(let ii = 0; ii  < imgs.length; ii++){
+          if(imgs[ii].idPin === this.info[id].idPin) {
+            let imgX = document.createElement('img');
+            imgX.setAttribute('src', imgs[ii].url);
+            imgX.setAttribute('class', 'item-img');
+            
+            imgCont.appendChild(imgX);
+          }
+        }
+      })
+
+
+      let container = document.querySelector('div#information');
+      container.classList.remove('visibility');
+
+      let panel = container.querySelector('div.panel');
+      switching(panel, 'top50', 'top80');
+      
       console.log(id);
-    }
+    };
+
+    document.querySelector('#exit-panel').onclick = () => {
+      let container = document.querySelector('div#information');
+      container.classList.add('visibility');
+
+      let panel = container.querySelector('div.panel');
+      switching(panel, 'top80', 'top50');
+    };
   }
+
+
 };
 </script>
 
 <style lang="scss">
+#exit-panel {
+  position: absolute;
+  left: 98.5%;
+  top: .5%;
+  color: rgb(207, 207, 207);
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(134, 134, 134);
+  }
+}
+
+.visibility {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.top80 {
+  top: 80%;
+}
+
+.top50 {
+  top: 50%;
+}
+
 #information {
   position: absolute;
   top: 0;
@@ -98,7 +175,7 @@ export default {
   width: 100vw;
   height: 100vh;
   z-index: 100000;
-  display: none;
+  transition: 0.6s;
 
   &:after {
     content: '';
@@ -113,7 +190,8 @@ export default {
   .panel {
     z-index: 100002;
     position: absolute;
-    top: 50%;
+    //Removed for class management
+    //top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 1;
@@ -124,10 +202,27 @@ export default {
     border-radius: 20px;
     display: flex;
     flex-direction: row;
+    transition: 1s;
 
     .item-panel {
       flex: 1;
       height: 100%;
+
+      .item-title {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-size: 2em;
+        color: black;
+        text-align: center;
+      }
+    }
+
+    .image-cont {
+      display: flex;
+      flex-direction: column;
+
+      .item-img {
+        flex: 1;
+      }
     }
 }
 }
