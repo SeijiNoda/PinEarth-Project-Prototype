@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueResource from "vue-resource";
 import VueRouter from "vue-router";
+import StarRating from 'vue-star-rating';
 
 import * as Vue2Leaflet from "vue2-leaflet";
 import 'leaflet/dist/leaflet.css';
@@ -25,6 +26,9 @@ Vue.config.productionTip = false;
 Vue.component('l-map', Vue2Leaflet.LMap);
 Vue.component('l-tile-layer', Vue2Leaflet.LTileLayer);
 Vue.component('l-marker', Vue2Leaflet.LMarker);
+
+// StarRating
+Vue.component('star-rating', StarRating);
 
 // Router and routes
 import { routes } from "./routes";
