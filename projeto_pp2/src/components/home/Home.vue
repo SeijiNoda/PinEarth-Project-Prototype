@@ -86,13 +86,30 @@
           Rate us!
         </div>
         <div class="rtUs-stars">
-          <star-rating v-model="rating" :show-rating="false" @rating-selected="createRating"></star-rating>
+          <star-rating v-model="rating" :show-rating="false"></star-rating>
         </div>
         <div class="rtUs-submit">
           <div class="rtUs-btn">Send</div>
         </div>
       </div>
     </section>
+
+    <!-- Thanks modal -->
+    <section id="tks" class="thanks hideThanks">
+      <div class="tks-shape">
+        <div id="exit">
+          <font-awesome-icon icon="times"></font-awesome-icon>
+        </div>
+        <div class="tks-body">
+          We appreciate your colaboration :)
+
+          <div id="check">
+            <font-awesome-icon icon="check-circle"></font-awesome-icon>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 </template>
 
@@ -143,32 +160,90 @@ export default {
 
     //RateUs' JavaScript
     const rateUs = document.getElementById("rtUs");
-    const svgIcon = document.querySelector('section#rtUs div.open-icon svg');
+    const svgIconRtUs = document.querySelector('section#rtUs div.open-icon svg');
+    const rtUsButton = document.querySelector("section#rtUs div.rtUs-body div.rtUs-submit div.rtUs-btn");
+    const rtUsTitle = document.querySelector("section#rtUs div.rtUs-body div.rtUs-title")
+    const tks = document.querySelector("section#tks");
+    const closeButton = document.querySelector("section#tks div.tks-shape div#exit");
 
     document.querySelector('section#rtUs div.open-icon').onclick = () => {
       rateUs.classList.toggle('hideRateUs');
-      svgIcon.classList.toggle('rotate180');
+      svgIconRtUs.classList.toggle('rotate180');
     };
-  },
-  methods: {
-    createRating() {
+
+    rtUsButton.onclick = () => {
       let rating = {
         "nota": this.rating
       };
 
-      // this.$http.post("https://localhost:5001/avaliacao", rating)
-      // .then(response => {
-      //   alert("INSERIU!");
-      // })
-      // .catch(err => {
-      //   console.log(err.status);
-      // })
+      //this.$http.post("https://localhost:5001/avaliacao", rating)
+      //.then(response => {
+      //})
+      //.catch(err => {
+      //console.log(err.status);
+      //})
+
+      tks.classList.remove("hideThanks");
+    };  
+
+    closeButton.onclick = () => {
+      tks.classList.toggle("hideThanks");
     }
   }
 };
 </script>
 
 <style lang="scss">
+
+//Actual tks SCCS
+  .thanks {
+    // Positioning
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    // Normal
+    width: 20vw;
+    height: 20vh;
+    color: black;
+    background-color: #618685;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    user-select: none;
+    transition: 0.6s;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+
+    // Display
+    display: flex;
+
+    .tks-body {
+      vertical-align: middle;
+      line-height: 5.5vh;
+    }
+
+    #exit {
+      cursor: pointer;
+      width: 10%;
+      margin: auto;
+    }
+
+    .tks-shape {
+      background-color: white;
+      border-radius: 10px;
+    }
+
+    #check {
+      margin: auto;
+      width: 10%;
+      display: flex;
+      color: rgb(0, 172, 9);
+    }
+  }
+
+
 //Actual RateUs SCSS
   .rateUs {
     //Positioning
@@ -226,7 +301,7 @@ export default {
       }
 
       .rtUs-stars {
-        flex: 1;
+        //flex: 1;
         text-align: center;
       }
 
@@ -243,7 +318,7 @@ export default {
           font-weight: bold;
           margin: auto;
           text-align: center;
-          background: green;
+          background: #618685;
           text-transform: uppercase;
           cursor: pointer;
           transition: 0.3s;
@@ -268,4 +343,9 @@ export default {
   .rtUs-item {
     flex: 1;
   }
+
+  .hideThanks {
+    top: -100%;
+  }
+
 </style>

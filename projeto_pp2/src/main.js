@@ -8,7 +8,7 @@ import * as Vue2Leaflet from "vue2-leaflet";
 import 'leaflet/dist/leaflet.css';
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faUsers, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -16,6 +16,7 @@ import { faWikipediaW } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 // FontAwesome
+library.add(faCheckCircle);
 library.add(faUsers);
 library.add(faTimes);
 library.add(faGithub);
