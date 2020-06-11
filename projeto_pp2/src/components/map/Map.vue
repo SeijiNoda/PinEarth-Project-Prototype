@@ -32,6 +32,24 @@ export default {
     }
   },
   mounted() {
+    //Static functions
+    //Random color generator
+    const randomColor = () => {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+
+    //Switches classes based on a giving object(obj)
+    const switching = (obj, c1, c2) => {
+      obj.classList.add(c1);
+      obj.classList.remove(c2);
+    };
+
+    //Setting PinEarth's map with Leaflet
     var pinEarth = L.map("mapid", {
       minZoom: 3,
       maxZoom: 6,
@@ -39,6 +57,8 @@ export default {
       zoomAnimation: true,
       worldCopyJump: true
     }).setView([0, -0], 3);
+
+    //Getting our map from Mapbox API
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/swiji/ckawr57dh1yfq1ipntl41rbec/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3dpamkiLCJhIjoiY2thd29paXNyMDRzMTJxdG1ubGI2MWRrNSJ9.fKasE79jvgDXiHL8aN-0xg",
       {
@@ -51,20 +71,7 @@ export default {
       }
     ).addTo(pinEarth);
 
-    const randomColor = () => {
-      var letters = "0123456789ABCDEF";
-      var color = "#";
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    };
-
-    const switching = (obj, c1, c2) => {
-      obj.classList.add(c1);
-      obj.classList.remove(c2);
-    }
-
+    //ASP.net C# API HTTP request for Pins' treatment
     this.$http.get('https://localhost:5001/Pin').then(response => {
       this.info = response.body;
       console.log(this.info);
@@ -72,8 +79,6 @@ export default {
       for (var i = 0; i < this.info.length; i++) {
         let color = randomColor();
         let coords = this.info[i].coordenadas.split(',');
-        console.log(coords[0] + ' ' + coords[1]);
-
 
         let circle = L.circle(
           [coords[0], coords[1]],
@@ -95,6 +100,7 @@ export default {
       console.log('API error: ' + response.status);
     });
 
+    //Function for receiving Pin ID and setting correct info on container
     const receiveData = (e, id) => {
       let title = document.querySelector('div.text-cont div.item-title');
       let body = document.querySelector('div.text-cont div.item-body');
@@ -107,10 +113,11 @@ export default {
         let imgs = response.body;
         let imgCont = document.querySelector('div.image-cont');
         imgCont.innerHTML = "";
-        for(let ii = 0; ii  < imgs.length; ii++){
-          if(imgs[ii].idPin === this.info[id].idPin) {
+
+        for(let i = 0; i < imgs.length; i++) {
+          if(imgs[i].idPin === this.info[id].idPin) {
             let imgX = document.createElement('img');
-            imgX.setAttribute('src', imgs[ii].url);
+            imgX.setAttribute('src', imgs[i].url);
             imgX.setAttribute('class', 'item-img');
             
             imgCont.appendChild(imgX);
@@ -118,16 +125,15 @@ export default {
         }
       })
 
-
+      //Handling container's visibility (ON)
       let container = document.querySelector('div#information');
       container.classList.remove('visibility');
 
       let panel = container.querySelector('div.panel');
       switching(panel, 'top50', 'top80');
-      
-      console.log(id);
     };
 
+    //Handling container's visibility (OFF)
     document.querySelector('#exit-panel').onclick = () => {
       let container = document.querySelector('div#information');
       container.classList.add('visibility');
@@ -136,8 +142,6 @@ export default {
       switching(panel, 'top80', 'top50');
     };
   }
-
-
 };
 </script>
 

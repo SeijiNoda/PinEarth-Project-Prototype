@@ -1,5 +1,6 @@
 <template>
   <main>
+    <!-- Home carrousel -->
     <section class="home">
       <div class="home-content">
         <div class="slidershow middle">
@@ -43,6 +44,7 @@
         </div>
       </div>
     </section>
+    <!-- About Us modal -->
     <section class="about">
       <div class="container-about about-inactive">
         <div class="info-about">
@@ -68,31 +70,33 @@
                 <i id="gitLink">
                   <font-awesome-icon :icon="['fab', 'github']" />
                 </i>
-                <i id="usersLink">
-                  <font-awesome-icon icon="users" />
-                </i>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-
+    <!-- Rate Us modal -->
     <section id="rtUs" class="rateUs hideRateUs">
-       <font-awesome-icon icon="times" id="exit-panel"></font-awesome-icon>
-      <div id="introduction">
-        <div class="text">RATE OUR PROJECT!</div>
+      <div class="open-icon">
+        <font-awesome-icon icon="chevron-left"></font-awesome-icon>
       </div>
-      <star-rating v-model="rating" :show-rating="false" @rating-selected="createRating"></star-rating>
-      <div id="footer">
-        <div class="text">WE APPRECIATE :)</div>
+      <div class="rtUs-body">
+        <div class="rtUs-title">
+          Rate us!
+        </div>
+        <div class="rtUs-stars">
+          <star-rating v-model="rating" :show-rating="false" @rating-selected="createRating"></star-rating>
+        </div>
+        <div class="rtUs-submit">
+          <div class="rtUs-btn">Send</div>
+        </div>
       </div>
     </section>
   </main>
 </template>
 
 <script>
-
 import StarRating from 'vue-star-rating';
 
 export default {
@@ -105,18 +109,20 @@ export default {
     };
   },
   mounted: function() {
-    let gitLink = document.querySelector("#gitLink");
+    //Setting GitHub link
+    const gitLink = document.querySelector("#gitLink");
+
     gitLink.onclick = () => {
       window.open(
         "https://github.com/SeijiNoda/Projeto_de_Pratica_Profissional_II"
       );
     };
 
+    //About Us button, makes it popup
     const btnAbout = document.getElementsByClassName("nav-item")[2];
     const aboutUs = document.querySelector("section.about");
     const containerAbout = aboutUs.getElementsByClassName("container-about")[0];
 
-    //About Us button, makes it popup
     btnAbout.onclick = () => {
       containerAbout.classList.remove("about-inactive");
       aboutUs.style["pointer-events"] = "all";
@@ -135,17 +141,14 @@ export default {
       window.location = "#/map";
     };
 
+    //RateUs' JavaScript
     const rateUs = document.getElementById("rtUs");
+    const svgIcon = document.querySelector('section#rtUs div.open-icon svg');
 
-    rateUs.onclick = () => {
-      rateUs.classList.remove('hideRateUs');
+    document.querySelector('section#rtUs div.open-icon').onclick = () => {
+      rateUs.classList.toggle('hideRateUs');
+      svgIcon.classList.toggle('rotate180');
     };
-
-    document.querySelector("#exit-panel").onclick = () => {
-      alert("PQ NAO FUNCIONA?");
-      rateUs.classList.add('hideRateUs');
-    };
-    
   },
   methods: {
     createRating() {
@@ -166,51 +169,103 @@ export default {
 </script>
 
 <style lang="scss">
+//Actual RateUs SCSS
   .rateUs {
+    //Positioning
     position: absolute;
     top: 80%;
     left: 90%;
     transform: translate(-50%, -50%);
+
+    //Normal
     width: 20vw;
-    height: 50vh;
+    height: 20vh;
+    padding: 5px;
     background: white;
-    transition: 0.6s;
-    padding: 10px;
-    text-align: center;
-    border-radius: 10px 0px 0px 0px;
-    background-color: #9999e6;
+    border-radius: 10px 0px 0px 10px;
     user-select: none;
-  }
+    transition: 0.8s;
 
-  .text {
-    font-size: 20px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-  }
+    //Display
+    display: flex;
+    
+  
+    .open-icon {
+      //Parent's flex
+      flex: 1;
 
-  #footer {
-    position: relative;
-    top: 24vh;
-    background-color: #8585e0;
-    border-radius: 10px;
-  }
+      //Align vertically
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 19vh;
 
-  #introduction {
-    background-color: #8585e0;
-    border-radius: 10px;
+      //Normal
+      height: 100%;
+      font-size: 2vh;
+      color: grey;
+      border-right: 2px solid rgb(180, 180, 180);
+      cursor: pointer;
+
+      //Rotate SVG icon
+      svg {
+        transition: 0.3s;
+      }
+    }
+
+    .rtUs-body {
+      flex: 15;
+      display: flex;
+      flex-direction: column;
+
+      .rtUs-title {
+        flex: 1;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: black;
+        text-align: center;
+        font-size: 1.5em;
+      }
+
+      .rtUs-stars {
+        flex: 1;
+        text-align: center;
+      }
+
+      .rtUs-submit {
+        flex: 1;
+
+        .rtUs-btn {
+          color: white;
+          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+          border: none;
+          border-radius: 5px;
+          padding: 5px;
+          width: 50%;
+          font-weight: bold;
+          margin: auto;
+          text-align: center;
+          background: green;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: 0.3s;
+
+          &:hover {
+            letter-spacing: 2px;
+          }
+        }
+      }
+    }
+  }
+  
+//Postiioning classes
+  .rotate180 {
+    transform: rotate(180deg);
   }
 
   .hideRateUs {
-    transform: translate(45%,25%);
+    left: 108.5%;
   }
 
-  #exit-panel {
-    position: relative;
-    color: rgb(207, 207, 207);
-    transition: 0.3s;
-    cursor: pointer;
-
-    &:hover {
-      color: rgb(134, 134, 134);
-    }
+  .rtUs-item {
+    flex: 1;
   }
 </style>
