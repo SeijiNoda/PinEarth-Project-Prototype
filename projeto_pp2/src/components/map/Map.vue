@@ -12,9 +12,7 @@
           <a id="item-wikipedia"><font-awesome-icon :icon="['fab', 'wikipedia-w']"></font-awesome-icon></a>
         </div>
         <div class="image-cont item-panel">
-          <img class="item-img">
-          <img class="item-img">
-          <img class="item-img">
+          <!-- Images go here -->
         </div>
       </div>
     </div>
@@ -48,6 +46,45 @@ export default {
       obj.classList.add(c1);
       obj.classList.remove(c2);
     };
+
+    const imgHeights = [];  
+    const scrollImg = document.querySelector('div.image-cont').onscroll = () => {
+      let imgCont = document.querySelector('div.image-cont');
+      let y = imgCont.scrollTop + (imgCont.clientHeight) / 2;
+      //Testing
+      console.log(imgCont.scrollTop + ' + ' + imgCont.clientHeight + ' ' + imgHeights[0] + ' ' + imgHeights[1]);
+      //
+      if(y > imgHeights[0]) {
+        if(y > (imgHeights[0] + imgHeights[1])) {
+          let img3 = document.querySelector('[id="img3"]');
+            img3.classList.remove('img-focus');
+          let img1 = document.querySelector('[id="img1"]');
+            img1.classList.add('img-focus');
+
+          let img2 = document.querySelector('[id="img2"]');
+            img2.classList.add('img-focus')
+          console.log('imagem 3');
+        } else {
+          let img2 = document.querySelector('[id="img2"]');
+            img2.classList.remove('img-focus');
+          let img1 = document.querySelector('[id="img1"]');
+            img1.classList.add('img-focus');
+          
+          let img3 = document.querySelector('[id="img3"]');
+            img3.classList.add('img-focus')
+          console.log('imagem 2');
+        }
+      } else {
+        let img1 = document.querySelector('[id="img1"]');
+          img1.classList.remove('img-focus');
+        let img2 = document.querySelector('[id="img2"]');
+          img2.classList.add('img-focus');
+        
+        let img3 = document.querySelector('[id="img3"]');
+          img3.classList.add('img-focus')
+        console.log('imagem 1');
+      }
+    }
 
     //Setting PinEarth's map with Leaflet
     var pinEarth = L.map("mapid", {
@@ -112,6 +149,7 @@ export default {
       this.$http.get(`https://localhost:5001/ImagemPin/`).then(response => {
         let imgs = response.body;
         let imgCont = document.querySelector('div.image-cont');
+        let indexCount = 0;
         imgCont.innerHTML = "";
 
         for(let i = 0; i < imgs.length; i++) {
@@ -119,8 +157,14 @@ export default {
             let imgX = document.createElement('img');
             imgX.setAttribute('src', imgs[i].url);
             imgX.setAttribute('class', 'item-img');
+            if(indexCount != 0)
+              imgX.setAttribute('class', 'item-img img-focus')
+            imgX.setAttribute('id', `img${indexCount + 1}`);
             
             imgCont.appendChild(imgX);
+
+            imgHeights[indexCount] = imgX.offsetHeight;
+            indexCount++;
           }
         }
       })
@@ -223,9 +267,19 @@ export default {
     .image-cont {
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
+      overflow-y: visible;
 
       .item-img {
+        overflow: visible;
         flex: 1;
+        margin: 20px;
+        width: auto;
+        max-width: 600px;
+        height: auto;
+        max-height: 400px;
+        transition: 0.6s;
+        border-radius: 4px;
       }
     }
 }
@@ -238,5 +292,9 @@ export default {
 .mapa {
   color: red;
   height: 100vh;
+}
+
+.img-focus {
+  opacity: 0.5;
 }
 </style>
