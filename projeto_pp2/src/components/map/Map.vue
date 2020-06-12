@@ -142,7 +142,7 @@ export default {
       let title = document.querySelector('div.text-cont div.item-title');
       let body = document.querySelector('div.text-cont div.item-body');
       let wikipedia = document.querySelector('a#item-wikipedia');
-      title.innerHTML = this.info[id].nomeLocal;
+      title.innerHTML = this.info[id].nomeLocal + ` <span class="title-country">${this.info[id].pais}</span>`;
       body.innerHTML = this.info[id].descricao;
       wikipedia.setAttribute('href', this.info[id].wikipediaUrl);
 
@@ -255,12 +255,19 @@ export default {
     .item-panel {
       flex: 1;
       height: 100%;
+      padding: 20px;
 
       .item-title {
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        font-family: Roboto, HelveticaNeue, Arial, sans-serif;
         font-size: 2em;
         color: black;
-        text-align: center;
+      
+        .title-country {
+          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+          font-size: 0.6em;
+          color: grey;
+          text-transform: uppercase;
+        }
       }
     }
 

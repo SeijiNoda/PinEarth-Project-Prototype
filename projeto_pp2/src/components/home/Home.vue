@@ -96,18 +96,10 @@
 
     <!-- Thanks modal -->
     <section id="tks" class="thanks hideThanks">
-      <div class="tks-shape">
-        <div id="exit">
-          <font-awesome-icon icon="times"></font-awesome-icon>
-        </div>
         <div class="tks-body">
-          We appreciate your colaboration :)
-
-          <div id="check">
-            <font-awesome-icon icon="check-circle"></font-awesome-icon>
-          </div>
+          <font-awesome-icon icon="check-circle"></font-awesome-icon>
+          Thanks from the <i>PinEarth</i> team!
         </div>
-      </div>
     </section>
 
   </main>
@@ -160,11 +152,10 @@ export default {
 
     //RateUs' JavaScript
     const rateUs = document.getElementById("rtUs");
-    const svgIconRtUs = document.querySelector('section#rtUs div.open-icon svg');
-    const rtUsButton = document.querySelector("section#rtUs div.rtUs-body div.rtUs-submit div.rtUs-btn");
-    const rtUsTitle = document.querySelector("section#rtUs div.rtUs-body div.rtUs-title")
+    const svgIconRtUs = rateUs.querySelector('div.open-icon svg');
+    const rtUsButton = rateUs.querySelector("div.rtUs-body div.rtUs-submit div.rtUs-btn");
+    const rtUsTitle = rateUs.querySelector("div.rtUs-body div.rtUs-title")
     const tks = document.querySelector("section#tks");
-    const closeButton = document.querySelector("section#tks div.tks-shape div#exit");
 
     document.querySelector('section#rtUs div.open-icon').onclick = () => {
       rateUs.classList.toggle('hideRateUs');
@@ -186,8 +177,8 @@ export default {
       tks.classList.remove("hideThanks");
     };  
 
-    closeButton.onclick = () => {
-      tks.classList.toggle("hideThanks");
+    tks.onclick = () => {
+      tks.classList.add("hideThanks");
     }
   }
 };
@@ -205,41 +196,26 @@ export default {
 
     // Normal
     width: 20vw;
-    height: 20vh;
-    color: black;
-    background-color: #618685;
-    border-radius: 10px;
+    cursor: pointer;
+    background: #3dc661;
     text-align: center;
-    padding: 5px;
+    padding: 10px;
+    border-radius: 2px;
     user-select: none;
-    transition: 0.6s;
+    transition: 1.5s;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 20px;
+    color: white;
 
-    // Display
-    display: flex;
+    &:hover {
+      background: #3dc661a2;
+    }
 
     .tks-body {
+      display: inline-block;
       vertical-align: middle;
       line-height: 5.5vh;
-    }
-
-    #exit {
-      cursor: pointer;
-      width: 10%;
-      margin: auto;
-    }
-
-    .tks-shape {
-      background-color: white;
-      border-radius: 10px;
-    }
-
-    #check {
-      margin: auto;
-      width: 10%;
-      display: flex;
-      color: rgb(0, 172, 9);
+      font-family: 'Roboto', 'HelveticaNeue', Arial, sans-serif;
     }
   }
 
@@ -345,7 +321,10 @@ export default {
   }
 
   .hideThanks {
-    top: -100%;
+    top: -0%;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
   }
 
 </style>
