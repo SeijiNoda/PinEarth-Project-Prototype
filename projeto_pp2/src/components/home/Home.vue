@@ -125,6 +125,14 @@ export default {
     },
     changeLocation: function(url) {
       window.location = url;
+    },
+    postRating: function (rating) {
+      this.$http.post("https://localhost:5001/avaliacao", rating)
+      .then(response => {
+      })
+      .catch(err => {
+      console.log(err.status);
+       })
     }
   },
   mounted: function() {
@@ -225,31 +233,71 @@ export default {
         }
     };
 
-    rtUsButton.onclick = () => {
-      let rating = {
-        "nota": this.rating
-      };
+    rtUsButton.onclick = () => { 
       
+      let rating;
       let radios = document.getElementsByName("star");
+
         if(stars[0].classList.contains('on')) {
             for(var i = 0; i < radios.length; i++) {
                 if(radios[i].checked) {
-                    console.log(`Number of stars: ${radios[i].value}`)
-                    break;
+
+                  console.log(`Number of stars: ${radios[i].value}`)
+                  rating = {
+                    "nota": parseInt(radios[i].value)
+                  }
+
+                  break;
                 }
             }
-        } else {
-            console.log("Stars not selected");
+          this.postRating(rating);
+        } 
+        else {
+          rating = {
+            "nota": 0
+          }
+          this.postRating(rating);
         }
 
-      //this.$http.post("https://localhost:5001/avaliacao", rating)
-      //.then(response => {
-      //})
-      //.catch(err => {
-      //console.log(err.status);
-      //})
+        rtUsTitle.innerHTML = "Users opinion";
 
-      tks.classList.remove("hideThanks");
+        let summation = 0;
+        let hmData = 0;
+        let avg = 0;
+
+        this.$http.get("https://localhost:5001/avaliacao")
+        .then(response => {
+          for(let i = 0; i < response.body.length; i++)
+          {
+            summation += response.body[i].nota;
+            hmData++;
+          }
+
+          avg = Math.floor(summation/hmData);
+          
+          for(let i = 0; i < avg; i++)
+            stars[i].classList.add("on");
+
+          for(let i = avg; i < 5; i++)
+            stars[i].classList.remove("on");
+        })
+        .catch(err => {
+          console.log(err.status);
+        })
+
+        tks.classList.remove("hideThanks");
+
+        rtUsButton.onclick = false;
+        rtUsButton.innerHTML = "Average";
+        rtUsButton.style.cursor = "default";
+        rtUsButton.style.letterSpacing = "1px";
+
+        for(let i = 0; i < stars.length; i++)
+        {
+          stars[i].onclick = false;
+          stars[i].style.cursor = "default";
+        }
+
     };  
 
     tks.onclick = () => {
@@ -275,7 +323,7 @@ export default {
     background: #3dc661;
     text-align: center;
     padding: 10px;
-    border-radius: 2px;
+    border-radius: 10px;
     cursor: pointer;
     user-select: none;
     transition: 1.5s;
@@ -343,6 +391,7 @@ export default {
         color: black;
         text-align: center;
         font-size: 1.5em;
+        transition: 1s;
       }
 
       .container-stars {
