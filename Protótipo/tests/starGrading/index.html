@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Grading</title>
+    <script src="https://kit.fontawesome.com/7abbdafe5c.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container-stars {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .container-submit {
+            flex: 1;
+        }
+        
+        .submit {
+            text-transform: uppercase;
+            font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: white;
+            background: rgb(30, 211, 30);
+            border-radius: 5px;
+            text-align: center;
+            padding: 5px;
+            font-size: 1.5em;
+            cursor: pointer;
+            width: 10vw;
+            margin: auto;
+            margin-top: 10px;
+            transition: 0.6s;
+            border: 2px solid rgb(30, 211, 30);
+            user-select: none;
+        }
+
+        .submit:hover {
+            letter-spacing: 2px;
+            color: rgb(30, 211, 30);
+            background: white;
+        }
+
+        .circle {
+            flex: 1;
+            margin: 5px;
+            border-radius: 50%;
+            width: 5vw;
+            height: 5vw;
+            cursor: pointer;
+            /* border: rgb(238, 238, 29) 3px solid; */
+            transition: 0.5s;
+            line-height: 5vw;
+            text-align: center;
+            font-size: 4vw;
+            display: inline-block;
+            vertical-align: middle;
+            color: rgb(202, 199, 199);
+        }
+
+        .input {
+            display: none;
+        }
+
+        .on {
+            color: rgb(238, 238, 29);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="container-stars">
+            <input class="input" type="radio" name="star" id="1" value="1">
+            <input class="input" type="radio" name="star" id="2" value="2">
+            <input class="input" type="radio" name="star" id="3" value="3">
+            <input class="input" type="radio" name="star" id="4" value="4">
+            <input class="input" type="radio" name="star" id="5" value="5">
+            <label for="1" class="circle"><i class="fas fa-star"></i></label>
+            <label for="2" class="circle"><i class="fas fa-star"></i></label>
+            <label for="3" class="circle"><i class="fas fa-star"></i></label>
+            <label for="4" class="circle"><i class="fas fa-star"></i></label>
+            <label for="5" class="circle"><i class="fas fa-star"></i></label>
+        </div>
+        <div class="container-submit">
+            <div class="submit" id="submit">Submit</div>
+        </div> 
+    </div>  
+</body>
+<script>
+
+    const stars = document.getElementsByClassName('circle');
+    
+    stars[0].onclick = (e) => {
+        if(stars[1].classList.contains('on')) {
+            for(let i = 1; i < 5; i++)
+                stars[i].classList.remove('on');
+        } else if(stars[0].classList.contains('on')) {
+            stars[0].classList.remove('on');
+        } else {
+            stars[0].classList.add('on');
+        }
+    };
+    stars[1].onclick = (e) => {
+        if(stars[2].classList.contains('on')) {
+            for(let i = 2; i < 5; i++)
+                stars[i].classList.remove('on');
+        } else if(stars[1].classList.contains('on')) {
+            stars[0].classList.remove('on');
+            stars[1].classList.remove('on');
+        } else {
+            stars[0].classList.add('on');
+            stars[1].classList.add('on');
+        }
+    };
+    stars[2].onclick = (e) => {
+        if(stars[3].classList.contains('on')) {
+            for(let i = 3; i < 5; i++)
+                stars[i].classList.remove('on');
+        } else if(stars[2].classList.contains('on')) {
+            stars[0].classList.remove('on');
+            stars[1].classList.remove('on');
+            stars[2].classList.remove('on');
+        } else {
+            stars[0].classList.add('on');
+            stars[1].classList.add('on');
+            stars[2].classList.add('on');
+        }
+    };
+    stars[3].onclick = (e) => {
+        if(stars[4].classList.contains('on')) {
+            for(let i = 4; i < 5; i++)
+                stars[i].classList.remove('on');
+        } else if(stars[3].classList.contains('on')) {
+            stars[0].classList.remove('on');
+            stars[1].classList.remove('on');
+            stars[2].classList.remove('on');
+            stars[3].classList.remove('on');
+        } else {
+            stars[0].classList.add('on');
+            stars[1].classList.add('on');
+            stars[2].classList.add('on');
+            stars[3].classList.add('on');
+        }
+    };
+    stars[4].onclick = (e) => {
+        if(stars[4].classList.contains('on')) {
+            stars[0].classList.remove('on');
+            stars[1].classList.remove('on');
+            stars[2].classList.remove('on');
+            stars[3].classList.remove('on');
+            stars[4].classList.remove('on');
+        } else {
+            stars[0].classList.add('on');
+            stars[1].classList.add('on');
+            stars[2].classList.add('on');
+            stars[3].classList.add('on');
+            stars[4].classList.add('on');
+        }
+    };
+
+    const btnSubmit = document.getElementById('submit');
+    btnSubmit.onclick = () => {
+        let radios = document.getElementsByName("star");
+        if(stars[0].classList.contains('on')) {
+            for(var i = 0; i < radios.length; i++) {
+                if(radios[i].checked) {
+                    alert(radios[i].value);
+                    break;
+                }
+            }
+        } else {
+            console.log("Stars not selected");
+        }
+    }
+</script>
+</html>

@@ -47,6 +47,11 @@ export default {
       obj.classList.remove(c2);
     };
 
+    const btnAboutUs = document.getElementsByClassName("nav-item")[2];
+    btnAboutUs.onclick = () => {
+      window.location = "#/";
+    };
+
     const imgHeights = [];  
     const scrollImg = document.querySelector('div.image-cont').onscroll = () => {
       let imgCont = document.querySelector('div.image-cont');
