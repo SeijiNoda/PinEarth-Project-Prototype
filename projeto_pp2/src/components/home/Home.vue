@@ -323,7 +323,7 @@ export default {
     background: #3dc661;
     text-align: center;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 2.5px;
     cursor: pointer;
     user-select: none;
     transition: 1.5s;
