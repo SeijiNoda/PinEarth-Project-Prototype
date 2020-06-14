@@ -128,11 +128,8 @@ export default {
     },
     postRating: function (rating) {
       this.$http.post("https://localhost:5001/avaliacao", rating)
-      .then(response => {
-      })
-      .catch(err => {
-      console.log(err.status);
-       })
+      .then(response => { console.log('Rating posted') })
+      .catch(err => { console.log(err.status) })
     }
   },
   mounted: function() {
@@ -147,23 +144,26 @@ export default {
     };
 
     //Everywhere makes it hidden
+    //NOTE: decided for not using @click for better readablity of the code
     containerAbout.onclick = () => {
       containerAbout.classList.add("about-inactive");
       aboutUs.style["pointer-events"] = "none";
     };
 
-    //RateUs' JavaScript
+    //RateUs' Script
     const rateUs = document.getElementById("rtUs");
     const svgIconRtUs = rateUs.querySelector('div.open-icon svg');
     const rtUsButton = rateUs.querySelector("div.rtUs-body div.rtUs-submit div.rtUs-btn");
     const rtUsTitle = rateUs.querySelector("div.rtUs-body div.rtUs-title")
     const tks = document.querySelector("section#tks");
 
+    //Popup lateral modal
     document.querySelector('section#rtUs div.open-icon').onclick = () => {
       rateUs.classList.toggle('hideRateUs');
       svgIconRtUs.classList.toggle('rotate180');
     };
-    
+   
+    //Dealing with all Star cases
     const stars = document.getElementsByClassName('circle');
     stars[0].onclick = (e) => {
         if(stars[1].classList.contains('on')) {
@@ -233,73 +233,69 @@ export default {
         }
     };
 
+    //Post user's rating
     rtUsButton.onclick = () => { 
-      
       let rating;
       let radios = document.getElementsByName("star");
 
-        if(stars[0].classList.contains('on')) {
-            for(var i = 0; i < radios.length; i++) {
-                if(radios[i].checked) {
+      if(stars[0].classList.contains('on')) {
+        for(var i = 0; i < radios.length; i++) {
+            if(radios[i].checked) {
 
-                  console.log(`Number of stars: ${radios[i].value}`)
-                  rating = {
-                    "nota": parseInt(radios[i].value)
-                  }
+              console.log(`Number of stars: ${radios[i].value}`)
+              rating = {
+                "nota": parseInt(radios[i].value)
+              }
 
-                  break;
-                }
+              break;
             }
-          this.postRating(rating);
-        } 
-        else {
-          rating = {
-            "nota": 0
-          }
-          this.postRating(rating);
+        }
+        this.postRating(rating);
+      } 
+      else {
+        rating = {
+          "nota": 0
+        }
+        this.postRating(rating);
+      }
+
+      rtUsTitle.innerHTML = "Average raiting at:";
+
+      let summation = 0;
+      let hmData = 0;
+      var avg = 0;
+
+      this.$http.get("https://localhost:5001/avaliacao").then(response => {
+        for(let i = 0; i < response.body.length; i++) {
+          summation += response.body[i].nota;
+          hmData++;
         }
 
-        rtUsTitle.innerHTML = "Users opinion";
+        avg = Math.floor(summation/hmData);
+        rtUsButton.innerHTML = `${avg} stars (${response.body.length})`;
 
-        let summation = 0;
-        let hmData = 0;
-        let avg = 0;
+        for(let i = 0; i < avg; i++)
+          stars[i].classList.add("on");
 
-        this.$http.get("https://localhost:5001/avaliacao")
-        .then(response => {
-          for(let i = 0; i < response.body.length; i++)
-          {
-            summation += response.body[i].nota;
-            hmData++;
-          }
+        for(let i = avg; i < 5; i++)
+          stars[i].classList.remove("on");
+      }).catch(err => {
+        console.log(err.status);
+      })
 
-          avg = Math.floor(summation/hmData);
-          
-          for(let i = 0; i < avg; i++)
-            stars[i].classList.add("on");
+      tks.classList.remove("hideThanks");
 
-          for(let i = avg; i < 5; i++)
-            stars[i].classList.remove("on");
-        })
-        .catch(err => {
-          console.log(err.status);
-        })
+      rtUsButton.onclick = false;
+      rtUsButton.style.cursor = "default";
+      rtUsButton.style.letterSpacing = "1px";
 
-        tks.classList.remove("hideThanks");
-
-        rtUsButton.onclick = false;
-        rtUsButton.innerHTML = "Average";
-        rtUsButton.style.cursor = "default";
-        rtUsButton.style.letterSpacing = "1px";
-
-        for(let i = 0; i < stars.length; i++)
-        {
-          stars[i].onclick = false;
-          stars[i].style.cursor = "default";
-        }
-
+      for(let i = 0; i < stars.length; i++) {
+        stars[i].onclick = false;
+        stars[i].style.cursor = "default";
+      }
     };  
 
+    //Hide success notification  
     tks.onclick = () => {
       tks.classList.add("hideThanks");
     }
@@ -308,169 +304,5 @@ export default {
 </script>
 
 <style lang="scss">
-
-//Actual 'Thanks' SCCS
-  .thanks {
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 20vw;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 20px;
-    color: white;
-    background: #3dc661;
-    text-align: center;
-    padding: 10px;
-    border-radius: 2.5px;
-    cursor: pointer;
-    user-select: none;
-    transition: 1.5s;
-
-    &:hover {
-      background: #3dc661a2;
-    }
-
-    .tks-body {
-      display: inline-block;
-      vertical-align: middle;
-      line-height: 5.5vh;
-
-      font-family: 'Roboto', 'HelveticaNeue', Arial, sans-serif;
-    }
-  }
-
-//Actual 'RateUs' SCSS
-  .rateUs {
-    position: absolute;
-    top: 80%;
-    left: 90%;
-    transform: translate(-50%, -50%);
-
-    width: 20vw;
-    height: 20vh;
-    padding: 5px;
-    background: white;
-    border-radius: 10px 0px 0px 10px;
-    user-select: none;
-    transition: 0.8s;
-
-    display: flex;
-    
-  
-    .open-icon {
-      flex: 1;
-
-      display: inline-block;
-      vertical-align: middle;
-      line-height: 19vh;
-
-      height: 100%;
-      font-size: 2vh;
-      color: grey;
-      border-right: 2px solid rgb(180, 180, 180);
-      cursor: pointer;
-
-      //Rotate SVG icon
-      svg {
-        transition: 0.3s;
-      }
-    }
-
-    .rtUs-body {
-      flex: 15;
-
-      display: flex;
-      flex-direction: column;
-
-      .rtUs-title {
-        flex: 1;
-
-        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        color: black;
-        text-align: center;
-        font-size: 1.5em;
-        transition: 1s;
-      }
-
-      .container-stars {
-        flex: 1;
-
-        display: flex;
-        flex-direction: row;
-
-        height: 2.3vw;
-
-        .circle {
-          flex: 1;
-          margin: 1px;
-          width: 2.3vw;
-          height: 2.3vw;
-          cursor: pointer;
-          transition: 0.25s;
-          line-height: 2.3vw;
-          text-align: center;
-          font-size: 2.3vw;
-          display: inline-block;
-          vertical-align: middle;
-          color: rgb(202, 199, 199);
-        }
-
-        //Activate star
-        .on {
-          color: rgb(255, 255, 50);
-        }
-        
-        //Hide radio buttons
-        .input {
-            display: none;
-        }
-      }
-
-      .rtUs-submit {
-        flex: 1;
-
-        .rtUs-btn {
-          color: white;
-          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-          border: none;
-          border-radius: 5px;
-          padding: 5px;
-          width: 50%;
-          font-weight: bold;
-          margin: auto;
-          text-transform: uppercase;
-          text-align: center;
-          background: #618685;
-          cursor: pointer;
-          transition: 0.3s;
-
-          &:hover {
-            letter-spacing: 2px;
-          }
-        }
-      }
-    }
-  }
-  
-//Hiding classes
-  .rotate180 {
-    transform: rotate(180deg);
-  }
-
-  .hideRateUs {
-    left: 108.5%;
-  }
-
-  .rtUs-item {
-    flex: 1;
-  }
-
-  .hideThanks {
-    top: -0%;
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-  }
+  @import '../../styles/rating';
 </style>

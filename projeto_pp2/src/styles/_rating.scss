@@ -1,0 +1,167 @@
+// _rating.scss - SCSS for styling Home.vue's Rating system
+// Matheus Seiji Luna Noda and Antonio Hideto Borges Kotsubo - june 2020
+
+//Actual 'Thanks' SCCS
+.thanks {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 20vw;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 20px;
+    color: white;
+    background: #3dc661;
+    text-align: center;
+    padding: 10px;
+    border-radius: 2.5px;
+    cursor: pointer;
+    user-select: none;
+    transition: 1.5s;
+
+    &:hover {
+      background: #3dc661a2;
+    }
+
+    .tks-body {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 5.5vh;
+
+      font-family: 'Roboto', 'HelveticaNeue', Arial, sans-serif;
+    }
+  }
+
+//Actual 'RateUs' SCSS
+  .rateUs {
+    position: absolute;
+    top: 80%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+
+    width: 20vw;
+    height: 20vh;
+    padding: 5px;
+    background: white;
+    border-radius: 10px 0px 0px 10px;
+    user-select: none;
+    transition: 0.8s;
+
+    display: flex;
+    
+  
+    .open-icon {
+      flex: 1;
+
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 19vh;
+
+      height: 100%;
+      font-size: 2vh;
+      color: grey;
+      border-right: 2px solid rgb(180, 180, 180);
+      cursor: pointer;
+
+      //Rotate SVG icon
+      svg {
+        transition: 0.3s;
+      }
+    }
+
+    .rtUs-body {
+      flex: 15;
+
+      display: flex;
+      flex-direction: column;
+
+      .rtUs-title {
+        flex: 1;
+
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: black;
+        text-align: center;
+        font-size: 1.5em;
+        transition: 1s;
+      }
+
+      .container-stars {
+        flex: 1;
+
+        display: flex;
+        flex-direction: row;
+
+        height: 2.3vw;
+
+        .circle {
+          flex: 1;
+          margin: 1px;
+          width: 2.3vw;
+          height: 2.3vw;
+          cursor: pointer;
+          transition: 0.25s;
+          line-height: 2.3vw;
+          text-align: center;
+          font-size: 2.3vw;
+          display: inline-block;
+          vertical-align: middle;
+          color: rgb(202, 199, 199);
+        }
+
+        //Activate star
+        .on {
+          color: rgb(255, 255, 50);
+        }
+        
+        //Hide radio buttons
+        .input {
+            display: none;
+        }
+      }
+
+      .rtUs-submit {
+        flex: 1;
+
+        .rtUs-btn {
+          color: white;
+          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+          border: none;
+          border-radius: 5px;
+          padding: 5px;
+          width: 50%;
+          font-weight: bold;
+          margin: auto;
+          text-transform: uppercase;
+          text-align: center;
+          background: #618685;
+          cursor: pointer;
+          transition: 0.3s;
+
+          &:hover {
+            letter-spacing: 2px;
+          }
+        }
+      }
+    }
+  }
+  
+//Hiding classes
+  .rotate180 {
+    transform: rotate(180deg);
+  }
+
+  .hideRateUs {
+    left: 108.5%;
+  }
+
+  .rtUs-item {
+    flex: 1;
+  }
+
+  .hideThanks {
+    top: -0%;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }

@@ -1,8 +1,10 @@
 <template>
   <main>
+    <!-- Map Container -->
     <div class="mapa">
       <div id="mapid"></div>
     </div>
+    <!-- Information panel -->
     <div id="information" class="visibility">
       <div class="panel top80">
         <font-awesome-icon icon="times" id="exit-panel"></font-awesome-icon>
@@ -31,14 +33,48 @@ export default {
   },
   mounted() {
     //Static functions
-    //Random color generator
-    const randomColor = () => {
-      var letters = "0123456789ABCDEF";
-      var color = "#";
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+    //Converts HSL color to HEX color
+    function hslToHex(h, s, l) {
+      h /= 360;
+      s /= 100;
+      l /= 100;
+      let r, g, b;
+      if (s === 0) {
+        r = g = b = l; // achromatic
+      } else {
+        const hue2rgb = (p, q, t) => {
+          if (t < 0) t += 1;
+          if (t > 1) t -= 1;
+          if (t < 1 / 6) return p + (q - p) * 6 * t;
+          if (t < 1 / 2) return q;
+          if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+          return p;
+        };
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
       }
-      return color;
+      const toHex = x => {
+        const hex = Math.round(x * 255).toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+      };
+      return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+    };
+
+    //Random color generator with HSL determined Saturation and Lightness
+    function generateHslaColors (saturation, lightness, alpha, amount) {
+      let colors = [];
+      let huedelta = Math.trunc(360 / amount);
+
+      for(var i = 0; i < amount; i++) {
+        let hue = i * huedelta;
+
+        colors.push(hslToHex(hue, saturation, lightness));
+      }
+
+      return colors;
     };
 
     //Switches classes based on a giving object(obj)
@@ -47,11 +83,13 @@ export default {
       obj.classList.remove(c2);
     };
 
+    //btnAboutUs comes from component Nav.vue, since it has diferent uses in Home.vue and in here, it can't be padronized
     const btnAboutUs = document.getElementsByClassName("nav-item")[2];
     btnAboutUs.onclick = () => {
       window.location = "#/";
     };
 
+    //Controlling Image focus on Information-Container
     const imgHeights = [];  
     const scrollImg = document.querySelector('div.image-cont').onscroll = () => {
       let imgCont = document.querySelector('div.image-cont');
@@ -89,7 +127,7 @@ export default {
           img3.classList.add('img-focus')
         console.log('imagem 1');
       }
-    }
+    };
 
     //Setting PinEarth's map with Leaflet
     var pinEarth = L.map("mapid", {
@@ -118,15 +156,15 @@ export default {
       this.info = response.body;
       console.log(this.info);
 
+      let c = generateHslaColors(70, 50, 1.0, this.info.length)
       for (var i = 0; i < this.info.length; i++) {
-        let color = randomColor();
         let coords = this.info[i].coordenadas.split(',');
 
         let circle = L.circle(
           [coords[0], coords[1]],
           {
-            color: color,
-            fillColor: color,
+            color: c[i],
+            fillColor: c[i],
             fillOpacity: 0.5,
             radius: 50000,
             data: i
@@ -195,118 +233,5 @@ export default {
 </script>
 
 <style lang="scss">
-#exit-panel {
-  position: absolute;
-  left: 98.5%;
-  top: .5%;
-  color: rgb(207, 207, 207);
-  transition: 0.3s;
-  cursor: pointer;
-
-  &:hover {
-    color: rgb(134, 134, 134);
-  }
-}
-
-.visibility {
-  visibility: hidden;
-  opacity: 0;
-}
-
-.top80 {
-  top: 80%;
-}
-
-.top50 {
-  top: 50%;
-}
-
-#information {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 100000;
-  transition: 0.6s;
-
-  &:after {
-    content: '';
-    background: black;
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    z-index: 100001;
-    opacity: 0.6;
-  }
-
-  .panel {
-    z-index: 100002;
-    position: absolute;
-    //Removed for class management
-    //top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 1;
-    user-select: none;
-    background: white;
-    width: 75vw;
-    height: 80vh;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: row;
-    transition: 1s;
-
-    .item-panel {
-      flex: 1;
-      height: 100%;
-      padding: 20px;
-
-      .item-title {
-        font-family: Roboto, HelveticaNeue, Arial, sans-serif;
-        font-size: 2em;
-        color: black;
-      
-        .title-country {
-          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-          font-size: 0.6em;
-          color: grey;
-          text-transform: uppercase;
-        }
-      }
-    }
-
-    .image-cont {
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-      overflow-y: visible;
-
-      .item-img {
-        overflow: visible;
-        flex: 1;
-        margin: 20px;
-        width: auto;
-        max-width: 600px;
-        height: auto;
-        max-height: 400px;
-        transition: 0.6s;
-        border-radius: 4px;
-      }
-    }
-}
-}
-
-#mapid {
-  height: 100%;
-}
-
-.mapa {
-  color: red;
-  height: 100vh;
-}
-
-.img-focus {
-  opacity: 0.5;
-}
+  @import '../../styles/map';
 </style>

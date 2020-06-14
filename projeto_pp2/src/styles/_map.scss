@@ -1,0 +1,116 @@
+// _map.scss - SCSS for controling and styling the Map.vue file
+// Matheus Seiji Luna Noda - june 2020
+#exit-panel {
+    position: absolute;
+    left: 98.5%;
+    top: .5%;
+    color: rgb(207, 207, 207);
+    transition: 0.3s;
+    cursor: pointer;
+  
+    &:hover {
+      color: rgb(134, 134, 134);
+    }
+  }
+  
+  .visibility {
+    visibility: hidden;
+    opacity: 0;
+  }
+  
+  .top80 {
+    top: 80%;
+  }
+  
+  .top50 {
+    top: 50%;
+  }
+  
+  #information {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100000;
+    transition: 0.6s;
+  
+    &:after {
+      content: '';
+      background: black;
+      position: absolute;
+      height: 100vh;
+      width: 100vw;
+      z-index: 100001;
+      opacity: 0.6;
+    }
+  
+    .panel {
+      z-index: 100002;
+      position: absolute;
+      //Removed for class management
+      //top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 1;
+      user-select: none;
+      background: white;
+      width: 75vw;
+      height: 80vh;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: row;
+      transition: 1s;
+  
+      .item-panel {
+        flex: 1;
+        height: 100%;
+        padding: 20px;
+  
+        .item-title {
+          font-family: Roboto, HelveticaNeue, Arial, sans-serif;
+          font-size: 2em;
+          color: black;
+        
+          .title-country {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            font-size: 0.6em;
+            color: grey;
+            text-transform: uppercase;
+          }
+        }
+      }
+  
+      .image-cont {
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: visible;
+  
+        .item-img {
+          overflow: visible;
+          flex: 1;
+          margin: 20px;
+          width: auto;
+          max-width: 600px;
+          height: auto;
+          max-height: 400px;
+          transition: 0.6s;
+          border-radius: 4px;
+        }
+      }
+  }
+  }
+  
+  #mapid {
+    height: 100%;
+  }
+  
+  .mapa {
+    color: red;
+    height: 100vh;
+  }
+  
+  .img-focus {
+    opacity: 0.5;
+  }
