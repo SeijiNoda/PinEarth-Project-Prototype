@@ -158,7 +158,7 @@ export default {
     const tks = document.querySelector("section#tks");
 
     //Popup lateral modal
-    document.querySelector('section#rtUs div.open-icon').onclick = () => {
+    rateUs.querySelector('div.open-icon').onclick = () => {
       rateUs.classList.toggle('hideRateUs');
       svgIconRtUs.classList.toggle('rotate180');
     };
@@ -281,7 +281,7 @@ export default {
           stars[i].classList.remove("on");
       }).catch(err => {
         console.log(err.status);
-      })
+      });
 
       tks.classList.remove("hideThanks");
 

@@ -14,9 +14,6 @@
     components: {
       home: Home,
       navbar: Navbar
-    },
-    mounted: function() {
-      document.title = 'PinEarth';
     }
   };
 </script>
